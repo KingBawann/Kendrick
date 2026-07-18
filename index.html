@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An unofficial premium fan site dedicated to Kendrick Lamar — Pulitzer Prize-winning rapper, songwriter, and storyteller. Explore his discography, biography, awards, and legacy.">
+  <meta name="keywords" content="Kendrick Lamar, hip-hop, rap, DAMN, To Pimp a Butterfly, Pulitzer Prize, Compton, TDE">
+  <meta name="author" content="Kendrick Lamar Fan Site">
+  <meta property="og:title" content="Kendrick Lamar — The Interactive Fan Experience">
+  <meta property="og:description" content="Explore the artistry, discography, and legacy of Kendrick Lamar in this premium fan museum.">
+  <meta property="og:type" content="website">
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#c0392b">
+
+  <title>Kendrick Lamar — The Interactive Fan Experience</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css?v=3">
+  <link rel="stylesheet" href="css/pages.css?v=3">
+</head>
+<body>
+
+  <!-- ══ LOADING SCREEN ══ -->
+  <div id="loading-screen" aria-hidden="true">
+    <div class="loader-logo">KL</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+    <div style="font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.2em;color:#606060;margin-top:.5rem">
+      LOADING THE EXPERIENCE
+    </div>
+  </div>
+
+  <!-- ══ SCROLL PROGRESS ══ -->
+  <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
+
+  <!-- ══ PARTICLE BACKGROUND ══ -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- ══ TOAST CONTAINER ══ -->
+  <div id="toast-container" role="status" aria-live="polite"></div>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-logo-container">
+        <div class="nav-logo" data-nav="home" role="link" tabindex="0" aria-label="Home">KL</div>
+        <button id="nav-collapse-btn" aria-label="Toggle Sidebar" title="Collapse Sidebar">
+          <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Desktop nav links -->
+      <div class="nav-links" role="list">
+        <span class="nav-link" data-nav="home" role="listitem"><span class="nav-icon">🏠</span> <span class="nav-text">Home</span></span>
+        <span class="nav-link" data-nav="biography" role="listitem"><span class="nav-icon">📖</span> <span class="nav-text">Bio</span></span>
+        <span class="nav-link" data-nav="discography" role="listitem"><span class="nav-icon">💿</span> <span class="nav-text">Albums</span></span>
+        <span class="nav-link" data-nav="songs" role="listitem"><span class="nav-icon">🎵</span> <span class="nav-text">Songs</span></span>
+        <span class="nav-link" data-nav="analysis" role="listitem"><span class="nav-icon">🔬</span> <span class="nav-text">Analysis</span></span>
+        <span class="nav-link" data-nav="timeline" role="listitem"><span class="nav-icon">⏳</span> <span class="nav-text">Timeline</span></span>
+        <span class="nav-link" data-nav="awards" role="listitem"><span class="nav-icon">🏆</span> <span class="nav-text">Awards</span></span>
+        <span class="nav-link" data-nav="collaborations" role="listitem"><span class="nav-icon">🤝</span> <span class="nav-text">Collabs</span></span>
+        <span class="nav-link" data-nav="gallery" role="listitem"><span class="nav-icon">🖼️</span> <span class="nav-text">Gallery</span></span>
+        <span class="nav-link" data-nav="quotes" role="listitem"><span class="nav-icon">💬</span> <span class="nav-text">Quotes</span></span>
+        <span class="nav-link" data-nav="facts" role="listitem"><span class="nav-icon">💡</span> <span class="nav-text">Facts</span></span>
+        <span class="nav-link" data-nav="favorites" role="listitem"><span class="nav-icon">❤️</span> <span class="nav-text">Favorites</span></span>
+        <span class="nav-link" data-nav="settings" role="listitem"><span class="nav-icon">⚙️</span> <span class="nav-text">Settings</span></span>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══ MOBILE NAV ══ -->
+  <div id="nav-mobile" role="dialog" aria-label="Mobile navigation">
+    <span class="nav-link" data-nav="home">Home</span>
+    <span class="nav-link" data-nav="biography">Biography</span>
+    <span class="nav-link" data-nav="discography">Albums</span>
+    <span class="nav-link" data-nav="songs">Songs</span>
+    <span class="nav-link" data-nav="analysis">Analysis</span>
+    <span class="nav-link" data-nav="timeline">Timeline</span>
+    <span class="nav-link" data-nav="awards">Awards</span>
+    <span class="nav-link" data-nav="collaborations">Collabs</span>
+    <span class="nav-link" data-nav="gallery">Gallery</span>
+    <span class="nav-link" data-nav="quotes">Quotes</span>
+    <span class="nav-link" data-nav="facts">Fun Facts</span>
+    <span class="nav-link" data-nav="favorites">❤️ Favorites</span>
+    <span class="nav-link" data-nav="settings">⚙️ Settings</span>
+  </div>
+
+  <!-- ══ MAIN APP CONTENT ══ -->
+  <main id="app" role="main">
+
+    <!-- Page shells (content is JS-rendered inside each) -->
+    <div id="page-home"           class="page" aria-labelledby="page-home-title"></div>
+    <div id="page-biography"      class="page" aria-label="Biography"></div>
+    <div id="page-discography"    class="page" aria-label="Discography"></div>
+    <div id="page-songs"          class="page" aria-label="Song Explorer"></div>
+    <div id="page-analysis"       class="page" aria-label="Album Analysis"></div>
+    <div id="page-timeline"       class="page" aria-label="Interactive Timeline"></div>
+    <div id="page-awards"         class="page" aria-label="Awards"></div>
+    <div id="page-collaborations" class="page" aria-label="Collaborations"></div>
+    <div id="page-gallery"        class="page" aria-label="Gallery"></div>
+    <div id="page-quotes"         class="page" aria-label="Quotes"></div>
+    <div id="page-facts"          class="page" aria-label="Fun Facts"></div>
+    <div id="page-favorites"      class="page" aria-label="Favorites"></div>
+    <div id="page-settings"       class="page" aria-label="Settings"></div>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer id="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div>
+          <div class="footer-logo">KL</div>
+          <p class="footer-tagline">
+            An interactive digital museum dedicated to the artistry and legacy of Kendrick Lamar.
+          </p>
+        </div>
+
+        <!-- Nav links -->
+        <div>
+          <div class="footer-heading">Explore</div>
+          <div class="footer-links">
+            <span class="footer-link" data-nav="discography">Discography</span>
+            <span class="footer-link" data-nav="biography">Biography</span>
+            <span class="footer-link" data-nav="timeline">Timeline</span>
+            <span class="footer-link" data-nav="awards">Awards</span>
+          </div>
+        </div>
+
+        <!-- Social -->
+        <div>
+          <div class="footer-heading">Follow Kendrick</div>
+          <div class="footer-social">
+            <div class="social-btn" title="Instagram" aria-label="Instagram">📷</div>
+            <div class="social-btn" title="Twitter/X" aria-label="Twitter">𝕏</div>
+            <div class="social-btn" title="Spotify" aria-label="Spotify">🎵</div>
+            <div class="social-btn" title="YouTube" aria-label="YouTube">▶️</div>
+            <div class="social-btn" title="TikTok" aria-label="TikTok">🎭</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          © 2025 Kendrick Lamar Fan Site · Built with love from a fan
+        </div>
+        <div class="footer-disclaimer">
+          This is an unofficial fan website created for educational and entertainment purposes only. Not affiliated with Kendrick Lamar, TDE, or Aftermath Entertainment.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+  <!-- App Logic (Module) -->
+  <script type="module" src="js/app.js?v=4"></script>
+
+  <!-- ══ EASTER EGG ══ -->
+  <script>
+    // Console easter egg
+    const style = 'font-size:20px;font-family:serif;font-weight:bold;';
+    console.log('%c"If I told you that a flower bloomed in a dark room, would you trust it?"', style + 'color:#d4af37');
+    console.log('%c— Kendrick Lamar, To Pimp a Butterfly', 'color:#c0392b;font-style:italic');
+    console.log('%c\nKendrick Lamar Fan Site · Built with HTML, CSS & JS\nAlt+/ for keyboard shortcuts\n', 'color:#606060');
+
+    // Konami code easter egg: ↑↑↓↓←→←→BA
+    const konami = [38,38,40,40,37,39,37,39,66,65];
+    let pos = 0;
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === konami[pos]) {
+        pos++;
+        if (pos === konami.length) {
+          pos = 0;
+          document.body.style.transition = 'filter 0.3s';
+          document.body.style.filter = 'hue-rotate(180deg)';
+          setTimeout(() => {
+            document.body.style.filter = '';
+          }, 2000);
+          const toast = document.createElement('div');
+          toast.className = 'toast';
+          toast.textContent = '🎉 Kung Fu Kenny Activated! DAMN.';
+          document.getElementById('toast-container')?.appendChild(toast);
+          setTimeout(() => toast.remove(), 3000);
+        }
+      } else {
+        pos = 0;
+      }
+    });
+  </script>
+
+</body>
+</html>
